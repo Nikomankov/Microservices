@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: ${APPLICATION_NAME:api-gateway}
+  cloud:
+    gateway:
+      enabled: true
+
+server:
+  port: 8080
+
+services:
+  uri:
+    service1: http://localhost:8081
+    service2: http://localhost:8082
