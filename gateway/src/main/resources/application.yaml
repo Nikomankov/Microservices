@@ -4,11 +4,18 @@ spring:
   cloud:
     gateway:
       enabled: true
+  devtools:
+    livereload:
+      enabled: false
 
 server:
   port: 8080
 
 services:
   uri:
-    service1: http://localhost:8081
-    service2: http://localhost:8082
+    user-service: http://localhost:8081
+    company-service: http://localhost:8082
+
+#logging:
+#  level:
+#    org.springframework.cloud.gateway: trace

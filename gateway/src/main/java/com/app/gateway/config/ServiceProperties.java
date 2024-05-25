@@ -16,5 +16,4 @@ public class ServiceProperties {
   public String getUriByName(String serviceName){
     return uri.get(serviceName);
   }
-
 }

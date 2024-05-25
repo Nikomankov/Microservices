@@ -1,6 +1,0 @@
-spring:
-  application:
-    name: ${APPLICATION_NAME:service-1}
-
-server:
-  port: 8081

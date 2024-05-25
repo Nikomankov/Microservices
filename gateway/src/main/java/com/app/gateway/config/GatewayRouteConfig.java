@@ -1,5 +1,6 @@
 package com.app.gateway.config;
 
+import com.app.gateway.filter.gateway.ValidationDtoGatewayFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
@@ -12,20 +13,23 @@ public class GatewayRouteConfig {
   private ServiceProperties serviceProperties;
 
   @Bean
-  public RouteLocator gatewayRouteLocator(RouteLocatorBuilder builder){
+  public RouteLocator gatewayRouteLocator(RouteLocatorBuilder builder,
+                                          ValidationDtoGatewayFilter validationDtoGatewayFilter){
     return builder.routes()
-        .route("service-1", r -> r
-            .path("/service1/**")
+
+        .route("user-service", r -> r
+            .path("/user-service/**")
             .filters(f -> f.stripPrefix(1)
-//                                    .filter()             //filter to validate by path and method
+                .filter(validationDtoGatewayFilter.apply(new ValidationDtoGatewayFilter.Config("user-service")))
             )
-            .uri(serviceProperties.getUriByName("service1")))
-        .route("service-2", r -> r
-            .path("/service2/**")
+            .uri(serviceProperties.getUriByName("user-service")))
+
+        .route("company-service", r -> r
+            .path("/company-service/**")
             .filters(f -> f.stripPrefix(1)
-//                                    .filter()             //filter to validate by path and method
+
             )
-            .uri(serviceProperties.getUriByName("service2")))
+            .uri(serviceProperties.getUriByName("company-service")))
         .build();
   }
 }

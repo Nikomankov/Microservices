@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: ${APPLICATION_NAME:user-service}
+  devtools:
+    livereload:
+      enabled: false
+
+server:
+  port: 8081

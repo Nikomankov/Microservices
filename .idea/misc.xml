@@ -5,10 +5,9 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/demo/pom.xml" />
         <option value="$PROJECT_DIR$/gateway/pom.xml" />
-        <option value="$PROJECT_DIR$/service-1/pom.xml" />
-        <option value="$PROJECT_DIR$/service-2/pom.xml" />
+        <option value="$PROJECT_DIR$/company-service/pom.xml" />
+        <option value="$PROJECT_DIR$/user-service/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
