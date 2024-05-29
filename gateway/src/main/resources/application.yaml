@@ -16,6 +16,15 @@ services:
     user-service: http://localhost:8081
     company-service: http://localhost:8082
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  metrics:
+    distribution:
+      percentiles-histogram:
+        "[http.server.request]": true
 #logging:
 #  level:
 #    org.springframework.cloud.gateway: trace
