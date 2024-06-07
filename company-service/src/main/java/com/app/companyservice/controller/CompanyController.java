@@ -6,6 +6,7 @@ import jakarta.validation.Validator;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,6 @@ public class CompanyController {
   @PostMapping
   public Mono<ResponseEntity<String>> saveCompany(@RequestBody CompanyDto companyDto){
     Set<ConstraintViolation<CompanyDto>> violationSet = defaultValidator.validate(companyDto);
-
     if(violationSet.isEmpty()){
       return Mono.just(ResponseEntity.ok().body("the request with company reached the service"));
     } else {
@@ -31,4 +31,8 @@ public class CompanyController {
     }
   }
 
+  @GetMapping
+  public ResponseEntity<String> getSomething(){
+    return ResponseEntity.ok().body("the request with company reached the service");
+  }
 }

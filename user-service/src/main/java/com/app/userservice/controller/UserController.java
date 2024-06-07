@@ -17,7 +17,6 @@ public class UserController {
 
   @PostMapping
   public Mono<ResponseEntity<String>> saveUser(@RequestBody UserDto userDto){
-    log.info("saveUser() invoke");
     return Mono.just(ResponseEntity.ok().body("the request with user reached the service"));
   }
   @GetMapping

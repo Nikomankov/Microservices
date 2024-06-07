@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+  <import class="ch.qos.logback.core.ConsoleAppender"/>
+  <import class="com.github.loki4j.logback.Loki4jAppender"/>
+  <springProperty scope="context" name="appName" source="spring.application.name"/>
+  <property name="LOKI_URL" value="http://localhost:3100/loki/api/v1/push"/>
+  <property name="MAIN_PATTERN" value="%d{ yyyy-MM-dd HH:mm:ss} %clr(%5p) %clr(${PID:- }){magenta} %clr(---){faint} [${appName}] %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
+  <property name="REST_PATTERN" value="%d{ yyyy-MM-dd HH:mm:ss} %clr(%5p) %clr(${PID:- }){magenta} %clr(---){faint} [${appName}] %clr(%X{methodName:-}){cyan} %X{traceId:--} %clr(%X{userId:--}){yellow} %clr(:){faint} %m%n"/>
+  <property name="LOKI_MAIN_PATTERN" value="%clr(%5p) %clr(${PID:- }){magenta} %clr(---){faint} [${appName}] %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
+  <property name="LOKI_REST_PATTERN" value="%clr(%5p) %clr(${PID:- }){magenta} %clr(---){faint} [${appName}] %clr(%X{methodName:-}){cyan} %X{traceId:--} %clr(%X{userId:--}){yellow} %clr(:){faint} %m%n"/>
+
+  <!-- CONSOLE -->
+  <appender name="SPRING_BOOT_CONSOLE" class="ConsoleAppender">
+    <encoder>
+      <pattern>${MAIN_PATTERN}</pattern>
+    </encoder>
+  </appender>
+  <appender name="REST_CONSOLE" class="ConsoleAppender">
+    <encoder>
+      <pattern>${REST_PATTERN}</pattern>
+    </encoder>
+  </appender>
+
+  <!-- LOKI -->
+  <appender name="SPRING_BOOT_LOKI" class="Loki4jAppender">
+    <http>
+      <url>${LOKI_URL}</url>
+    </http>
+    <format>
+      <label>
+        <pattern>
+          level=%level,
+          app=${appName}
+        </pattern>
+      </label>
+      <message>
+        <pattern>${LOKI_MAIN_PATTERN}</pattern>
+      </message>
+      <sortByTime>true</sortByTime>
+    </format>
+  </appender>
+  <appender name="REST_LOKI" class="Loki4jAppender">
+    <http>
+      <url>${LOKI_URL}</url>
+    </http>
+    <format>
+      <label>
+        <pattern>
+          level=%level,
+          app=${appName},
+          method=%X{methodName:-NONE},
+          traceID=%X{traceId:-NONE},
+          userID=%X{userId:-NONE}
+        </pattern>
+      </label>
+      <message>
+        <pattern>${LOKI_REST_PATTERN}</pattern>
+      </message>
+      <sortByTime>true</sortByTime>
+    </format>
+  </appender>
+
+  <logger name="REST" level="INFO" additivity="false">
+    <appender-ref ref="REST_CONSOLE"/>
+    <appender-ref ref="REST_LOKI"/>
+  </logger>
+
+  <root level="INFO" additivity="false">
+    <appender-ref ref="SPRING_BOOT_LOKI" />
+    <appender-ref ref="SPRING_BOOT_CONSOLE" />
+  </root>
+</configuration>

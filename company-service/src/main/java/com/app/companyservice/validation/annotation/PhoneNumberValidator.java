@@ -27,7 +27,6 @@ public class PhoneNumberValidator implements ConstraintValidator<ValidPhoneNumbe
 
   @Override
   public boolean isValid(String phoneNumber, ConstraintValidatorContext context) {
-    System.out.println("isValid() invoke");
     return phoneNumber != null && (phoneNumber.matches(RUSSIA_PATTERN) || phoneNumber.matches(BELARUS_PATTERN));
   }
 }

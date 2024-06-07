@@ -24,7 +24,14 @@ management:
   metrics:
     distribution:
       percentiles-histogram:
-        "[http.server.request]": true
-#logging:
-#  level:
-#    org.springframework.cloud.gateway: trace
+        http:
+          server:
+            requests: true
+  tracing:
+    sampling:
+      probability: 1.0
+    enabled: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true

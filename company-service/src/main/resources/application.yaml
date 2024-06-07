@@ -16,4 +16,14 @@ management:
   metrics:
     distribution:
       percentiles-histogram:
-        "[http.server.request]": true
+        http:
+          server:
+            requests: true
+  tracing:
+    sampling:
+      probability: 1.0
+    enabled: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true
