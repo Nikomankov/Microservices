@@ -30,6 +30,13 @@ public class GatewayRouteConfig {
 
             )
             .uri(serviceProperties.getUriByName("company-service")))
+
+        .route("rest-service", r -> r
+            .path("/rest-service/**")
+            .filters(f -> f.stripPrefix(1)
+
+            )
+            .uri(serviceProperties.getUriByName("rest-service")))
         .build();
   }
 }
